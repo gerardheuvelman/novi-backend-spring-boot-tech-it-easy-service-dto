@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,32 +16,40 @@ public class TelevisionController {
     private List<Television> televisions = new ArrayList();
 
     @GetMapping("/televisions")
-    public ResponseEntity<String> getTelevisions () {
-//        return new ResponseEntity<>(HttpStatus.OK); kan ook
-        return ResponseEntity.ok("My televisions");
+    public ResponseEntity<List<Television>> getTelevisions () {
+      if (televisions.size()>0) {
+        // return new ResponseEntity<>(HttpStatus.OK); kan ook
+        return ResponseEntity.ok(televisions);
+      } else {
+          throw new RecordNotFoundException("No televisions found");
+      }
     }
 
     @GetMapping("/televisions/{id}")
-    public ResponseEntity<String> getTelevisions (@PathVariable int id) {
-        if (id<10) {
+    public ResponseEntity<Television> getTelevisions (@PathVariable int id) {
+        if (id < televisions.size()) {
+            Television television = televisions.get(id);
             //        return new ResponseEntity<>(HttpStatus.OK); kan ook
-            return ResponseEntity.ok("television " + id);
+            return ResponseEntity.ok(television);
         } else {
-            throw new RecordNotFoundException("id not found");
+            throw new RecordNotFoundException("Requested television not found");
         }
     }
 
     @PostMapping("/televisions")
-    public ResponseEntity<Object> postTelevision(@RequestBody Television television) {
+    public ResponseEntity<String> postTelevision(@RequestBody Television television) {
         televisions.add(television);
-        return new ResponseEntity(HttpStatus.CREATED);
+        int id = televisions.indexOf(television);
+        String s = "/televisions/" + id;
+        URI uri = URI.create(s);
+        return ResponseEntity.created(uri).body("Television created");
     }
 
     @PutMapping("/televisions/{id}")
-    public ResponseEntity<Object> putTelevision(@PathVariable int id, @RequestBody Television t) {
+    public ResponseEntity<String> putTelevision(@PathVariable int id, @RequestBody Television television) {
         if (id < televisions.size()) {
-            televisions.set(id, t);
-            return ResponseEntity.ok("Item changed");
+            televisions.set(id, television);
+            return ResponseEntity.ok("television changed");
         } else {
             throw new RecordNotFoundException();
         }
