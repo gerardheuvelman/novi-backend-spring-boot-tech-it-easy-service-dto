@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>nl.ultimateapps</groupId>
 	<artifactId>TechItEasy</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>TechItEasy</name>
 	<description>Novi Homework assignment</description>
 	<properties>
