@@ -1,4 +1,4 @@
-package nl.ultimateapps.TechItEasy.exceptions;
+package nl.ultimateapps.TechItEasy.Exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

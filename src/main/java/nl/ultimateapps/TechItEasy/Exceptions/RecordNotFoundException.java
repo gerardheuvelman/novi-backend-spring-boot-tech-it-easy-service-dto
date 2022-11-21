@@ -1,4 +1,4 @@
-package nl.ultimateapps.TechItEasy.exceptions;
+package nl.ultimateapps.TechItEasy.Exceptions;
 
 public class RecordNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 1L; // Optioneel
