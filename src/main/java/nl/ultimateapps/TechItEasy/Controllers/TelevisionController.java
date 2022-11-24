@@ -120,4 +120,9 @@ public class TelevisionController {
             throw new RecordNotFoundException();
         }
     }
+
+    @GetMapping("/findbrand")
+    public ResponseEntity<Iterable<Television>> getTelevisionContaining(@RequestParam String query) {
+        return ResponseEntity.ok(repos.findByBrandContaining(query));
+    }
 }
